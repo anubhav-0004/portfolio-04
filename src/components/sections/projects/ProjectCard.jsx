@@ -2,8 +2,14 @@
 import { motion } from "framer-motion";
 import { ExternalLink, Github, ArrowUpRight } from "lucide-react";
 import { fadeInUp } from "@/lib/animations";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 export default function ProjectCard({ project }) {
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const isDark = !mounted || theme === "dark";
   return (
     <motion.div
       variants={fadeInUp}
@@ -11,7 +17,9 @@ export default function ProjectCard({ project }) {
         position: "relative",
         borderRadius: "16px",
         padding: "1.5px",
-        backgroundImage: `linear-gradient(#0D1320, #0D1320), linear-gradient(135deg, rgba(99,102,241,0.3), rgba(34,211,238,0.15))`,
+        backgroundImage: isDark
+          ? `linear-gradient(#0D1320, #0D1320), linear-gradient(135deg, rgba(99,102,241,0.3), rgba(34,211,238,0.15))`
+          : "#7d8696",
         backgroundOrigin: "border-box",
         backgroundClip: "padding-box, border-box",
         border: "1.5px solid transparent",
@@ -19,6 +27,7 @@ export default function ProjectCard({ project }) {
         transition: "all 0.3s ease",
         cursor: "default",
       }}
+      className="max-sm:p-px!"
       whileHover={{
         y: -6,
         boxShadow:
@@ -28,13 +37,15 @@ export default function ProjectCard({ project }) {
         e.currentTarget.style.backgroundImage = `linear-gradient(#0D1320, #0D1320), linear-gradient(135deg, #6366F1, #A78BFA, #22D3EE)`;
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.backgroundImage = `linear-gradient(#0D1320, #0D1320), linear-gradient(135deg, rgba(99,102,241,0.3), rgba(34,211,238,0.15))`;
+        e.currentTarget.style.backgroundImage = isDark
+          ? `linear-gradient(#0D1320, #0D1320), linear-gradient(135deg, rgba(99,102,241,0.3), rgba(34,211,238,0.15))`
+          : "#7d8696";
       }}
     >
       {/* Inner card */}
       <div
         style={{
-          background: "#0D1320",
+          background: isDark ? "#0D1320" : "#7d8696",
           borderRadius: "15px",
           padding: "24px",
           height: "100%",
@@ -44,6 +55,7 @@ export default function ProjectCard({ project }) {
           position: "relative",
           overflow: "hidden",
         }}
+        className="max-sm:py-6! max-sm:px-4!"
       >
         {/* Subtle top glow */}
         <div
@@ -68,6 +80,7 @@ export default function ProjectCard({ project }) {
             justifyContent: "space-between",
             marginBottom: "16px",
           }}
+          className="max-sm:mb-3!"
         >
           {/* Icon + title */}
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
@@ -76,7 +89,9 @@ export default function ProjectCard({ project }) {
                 width: "42px",
                 height: "42px",
                 borderRadius: "12px",
-                backgroundImage: `linear-gradient(#121B2E, #121B2E), linear-gradient(135deg, rgba(99,102,241,0.5), #22D3EE)`,
+                backgroundImage: isDark
+                  ? `linear-gradient(#121B2E, #121B2E), linear-gradient(135deg, rgba(99,102,241,0.5), #22D3EE)`
+                  : `linear-gradient(#383e6e, #383e6e), linear-gradient(135deg, rgba(99,102,241,0.6), #22D3EE)`,
                 backgroundOrigin: "border-box",
                 backgroundClip: "padding-box, border-box",
                 border: "1px solid transparent",
@@ -107,7 +122,7 @@ export default function ProjectCard({ project }) {
               <p
                 style={{
                   fontSize: "11px",
-                  color: "#6366F1",
+                  color: isDark ? "#6366F1" : "#242675",
                   fontWeight: 600,
                   letterSpacing: "0.05em",
                   textTransform: "uppercase",
@@ -128,7 +143,7 @@ export default function ProjectCard({ project }) {
                 width: "30px",
                 height: "30px",
                 borderRadius: "8px",
-                background: "rgba(99,102,241,0.08)",
+                background: isDark ? "rgba(99,102,241,0.08)" : "#383e6e",
                 border: "1px solid rgba(99,102,241,0.6)",
                 display: "flex",
                 alignItems: "center",
@@ -140,11 +155,11 @@ export default function ProjectCard({ project }) {
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = "rgba(99,102,241,0.2)";
-                e.currentTarget.style.borderColor = "rgba(99,102,241,0.5)";
+                e.currentTarget.style.borderColor = isDark ? "rgba(99,102,241,0.5)" : "#1b2675";
                 e.currentTarget.style.transform = "rotate(-45deg) scale(1.1)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = "rgba(99,102,241,0.08)";
+                e.currentTarget.style.background = isDark ? "rgba(99,102,241,0.08)" : "#383e6e";
                 e.currentTarget.style.borderColor = "rgba(99,102,241,0.2)";
                 e.currentTarget.style.transform = "rotate(0deg) scale(1)";
               }}
@@ -158,17 +173,18 @@ export default function ProjectCard({ project }) {
         <div
           style={{
             height: "1px",
-            background:
-              "linear-gradient(90deg, rgba(99,102,241,0.2), transparent)",
+            background: isDark ? 
+              "linear-gradient(90deg, rgba(99,102,241,0.2), transparent)" : "#3a4178",
             marginBottom: "14px",
           }}
+          className="max-sm:mb-2! max-sm:border-[rgba(99,102,241,0.5)]!"
         />
 
         {/* Description */}
         <p
           style={{
             fontSize: "13px",
-            color: "#94A3B8",
+            color: isDark ? "#94A3B8" : "#242675",
             lineHeight: 1.75,
             marginBottom: "16px",
             flex: 1,
@@ -193,9 +209,9 @@ export default function ProjectCard({ project }) {
                 fontFamily: "var(--font-jetbrains-mono), monospace",
                 fontSize: "10px",
                 fontWeight: 600,
-                color: "#6366F1",
+                color: isDark ? "#6366F1" : "#1b2675",
                 background: "rgba(99,102,241,0.07)",
-                border: "1px solid rgba(99,102,241,0.18)",
+                border: isDark ? "1px solid rgba(99,102,241,0.18)" : "1px solid #1b2675",
                 padding: "3px 9px",
                 borderRadius: "5px",
                 letterSpacing: "0.03em",
@@ -213,7 +229,7 @@ export default function ProjectCard({ project }) {
             alignItems: "center",
             justifyContent: "space-between",
             paddingTop: "14px",
-            borderTop: "1px solid rgba(255,255,255,0.05)",
+            borderTop: isDark ? "1px solid rgba(255,255,255,0.05)" : "1px solid #3a4178",
           }}
         >
           <a
@@ -226,23 +242,23 @@ export default function ProjectCard({ project }) {
               gap: "6px",
               fontSize: "12px",
               fontWeight: 500,
-              color: "#478569",
+              color: isDark ? "#478569" : "white",
               textDecoration: "none",
               transition: "all 0.2s ease",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.color = "#94A3B8";
-              e.currentTarget.querySelector(".gh-icon").style.color = "#F1F5F9";
+              e.currentTarget.style.color = isDark ? "#94A3B8" : "black";
+              e.currentTarget.querySelector(".gh-icon").style.color = isDark ? "#F1F5F9" : "black";
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.color = "#475569";
-              e.currentTarget.querySelector(".gh-icon").style.color = "#475569";
+              e.currentTarget.style.color = isDark ? "#478569" : "white";
+              e.currentTarget.querySelector(".gh-icon").style.color = isDark ? "#478569" : "white";
             }}
           >
             <Github
               size={13}
               className="gh-icon"
-              style={{ transition: "color 0.2s ease", color: "#478569" }}
+              style={{ transition: "color 0.2s ease", color: isDark ? "#478569" : "white" }}
             />
             View source
           </a>
@@ -264,24 +280,24 @@ export default function ProjectCard({ project }) {
                   project.category === "fullstack"
                     ? "#10B981"
                     : project.category === "frontend"
-                    ? "#6366F1"
-                    : project.category === "backend"
-                    ? "#F59E0B"
-                    : "#22D3EE",
+                      ? "#6366F1"
+                      : project.category === "backend"
+                        ? "#F59E0B"
+                        : "#22D3EE",
                 boxShadow:
                   project.category === "fullstack"
                     ? "0 0 6px #10B981"
                     : project.category === "frontend"
-                    ? "0 0 6px #6366F1"
-                    : project.category === "backend"
-                    ? "0 0 6px #F59E0B"
-                    : "0 0 6px #22D3EE",
+                      ? "0 0 6px #6366F1"
+                      : project.category === "backend"
+                        ? "0 0 6px #F59E0B"
+                        : "0 0 6px #22D3EE",
               }}
             />
             <span
               style={{
                 fontSize: "10px",
-                color: "#475569",
+                color: isDark ? "#475569" : "white",
                 fontFamily: "var(--font-jetbrains-mono), monospace",
                 textTransform: "uppercase",
                 letterSpacing: "0.06em",

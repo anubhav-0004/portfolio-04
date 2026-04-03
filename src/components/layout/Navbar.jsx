@@ -215,7 +215,7 @@ export default function Navbar() {
           </nav>
 
           {/* Right side */}
-          <div style={{ display: "flex", alignItems: "center", gap: "10px", background: `isDark ? "" : "transparent"` }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px", }} className="nav-right">
             <ThemeToggle />
 
             <motion.button
@@ -335,30 +335,6 @@ export default function Navbar() {
                   gap: "8px",
                 }}
               >
-                {/* Theme toggle in mobile menu */}
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    padding: "8px 16px",
-                    borderRadius: "10px",
-                    background: isDark
-                      ? "rgba(255,255,255,0.03)"
-                      : "rgba(99,102,241,0.04)",
-                  }}
-                >
-                  <span
-                    style={{
-                      fontSize: "13px",
-                      color: colors.mobileLinkColor,
-                      fontWeight: 500,
-                    }}
-                  >
-                    {isDark ? "Dark Mode" : "Light Mode"}
-                  </span>
-                  <ThemeToggle />
-                </div>
 
                 <button
                   onClick={() => handleNavClick("#contact")}

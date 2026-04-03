@@ -13,6 +13,8 @@ import { personal } from "@/content/personal";
 import { siteConfig } from "@/config/site";
 import { staggerContainer, fadeInUp, fadeInRight } from "@/lib/animations";
 import TerminalCard from "./TerminalCard";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 const socialLinks = [
   { icon: Github, href: siteConfig.links.github, label: "GitHub" },
@@ -23,6 +25,11 @@ const socialLinks = [
 
 export default function HeroSection() {
   const currentRole = useTypewriter(personal.roles, 80, 50, 2200);
+  
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const isDark = !mounted || theme === "dark"; 
 
   const handleScroll = (href) => {
     const id = href.replace("#", "");
@@ -45,6 +52,7 @@ export default function HeroSection() {
         paddingBottom: "80px",
         overflow: "hidden",
       }}
+      className="max-sm:pt-0!"
     >
       {/* Background dot grid */}
       <div
@@ -138,17 +146,17 @@ export default function HeroSection() {
 
             {/* Name */}
             <motion.div variants={fadeInUp} style={{ marginBottom: "16px" }}>
-              <p style={{ color: "#94A3B8", fontSize: "18px", marginBottom: "4px" }}>
+              <p style={{ color: isDark ? "#94A3B8" : "#767F8C", fontSize: "18px", marginBottom: "4px" }}>
                 Hi, I'm
               </p>
               <h1
-                className="font-heading"
+                className="font-heading light:text-black!"
                 style={{
                   fontSize: "clamp(44px, 6vw, 72px)",
                   fontWeight: 800,
                   letterSpacing: "-0.03em",
                   lineHeight: 1.05,
-                  color: "#F1F5F9",
+                  color: isDark ? "#F1F5F9" : "#0F172A",
                 }}
               >
                 {personal.name.split(" ")[0]}
@@ -185,7 +193,7 @@ export default function HeroSection() {
             <motion.p
               variants={fadeInUp}
               style={{
-                color: "#94A3B8",
+                color: isDark ? "#94A3B8" : "#767F8C",
                 fontSize: "16px",
                 lineHeight: 1.8,
                 marginBottom: "36px",
@@ -204,10 +212,11 @@ export default function HeroSection() {
                 gap: "14px",
                 marginBottom: "36px",
               }}
+              className="max-sm:justify-center max-sm:flex-row! max-sm:flex-nowrap! max-sm:mt-3!"
             >
               <motion.button
                 onClick={() => handleScroll("#projects")}
-                className="btn-gradient"
+                className="btn-gradient max-sm:px-7!"
                 style={{
                   display: "flex",
                   alignItems: "center",
@@ -236,17 +245,18 @@ export default function HeroSection() {
                   borderRadius: "100px",
                   fontSize: "14px",
                   fontWeight: 500,
-                  color: "#94A3B8",
+                  color: isDark ? "#94A3B8" : "#767F8C",
                   border: "1px solid rgba(255,255,255,0.12)",
-                  background: "rgba(255,255,255,0.04)",
+                  background: isDark ? "rgba(255,255,255,0.14)" : "rgba(255,255,255,0.84)",
                   textDecoration: "none",
                   transition: "all 0.2s ease",
                   cursor: "pointer",
                 }}
+                className="max-sm:px-5!"
                 whileHover={{
                   scale: 1.05,
-                  color: "#F1F5F9",
-                  borderColor: "rgba(255,255,255,0.25)",
+                  color: isDark ? "#F1F5F9" : "#0F172A",
+                  borderColor: "rgba(255,255,255,0.45)",
                 }}
                 whileTap={{ scale: 0.97 }}
               >
@@ -259,6 +269,7 @@ export default function HeroSection() {
             <motion.div
               variants={fadeInUp}
               style={{ display: "flex", alignItems: "center", gap: "10px" }}
+              className="max-sm:justify-center max-sm:mr-9! max-sm:mt-0! max-sm:gap-8!"
             >
               {socialLinks.map(({ icon: Icon, href, label }) => (
                 <motion.a
@@ -271,8 +282,8 @@ export default function HeroSection() {
                     width: "40px",
                     height: "40px",
                     borderRadius: "10px",
-                    border: "1px solid rgba(255,255,255,0.3)",
-                    background: "#0D1320",
+                    border: isDark ? "1px solid rgba(255,255,255,0.3)" : "2px solid rgba(81, 191, 245,0.8)",
+                    background: isDark ? "#0D1320!" : "transparent!",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -280,11 +291,12 @@ export default function HeroSection() {
                     textDecoration: "none",
                     transition: "all 0.2s ease",
                   }}
+                  className="max-sm:scale-125!"
                   whileHover={{
                     scale: 1.15,
                     y: -2,
-                    color: "#F1F5F9",
-                    borderColor: "rgba(99,102,241,0.5)",
+                    color: isDark ? "#F1F5F9!" : "black!",
+                    borderColor: isDark ? "rgba(99,102,241,0.5)" : "rgba(61, 191, 245,0.8)",
                   }}
                   whileTap={{ scale: 0.9 }}
                 >
@@ -320,12 +332,13 @@ export default function HeroSection() {
             alignItems: "center",
             gap: "6px",
           }}
+          className="max-sm:-bottom-30!"
         >
           <span
-            className="font-mono"
+            className="font-mono max-sm:scale-110!"
             style={{
               fontSize: "10px",
-              color: "#7498cc",
+              color: isDark ? "#7498cc" : "#767F8C",
               letterSpacing: "0.15em",
               textTransform: "uppercase",
             }}

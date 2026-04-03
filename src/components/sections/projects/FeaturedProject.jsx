@@ -1,14 +1,34 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { ExternalLink, Github, Star } from "lucide-react";
 import { fadeInUp } from "@/lib/animations";
+import { useTheme } from "next-themes";
+import { useEffect, useState, useRef } from "react";
+import Image from "next/image";
 
 export default function FeaturedProject({ project }) {
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  const [imageVisible, setImageVisible] = useState(false);
+  const previewRef = useRef(null);
+  const isInView = useInView(previewRef, { once: true, margin: "0px 0px -60px 0px" });
+
+  useEffect(() => setMounted(true), []);
+
+  // When preview section enters viewport, shimmer for 3s then show image
+  useEffect(() => {
+    if (!isInView) return;
+    const timer = setTimeout(() => setImageVisible(true), 3000);
+    return () => clearTimeout(timer);
+  }, [isInView]);
+
+  const isDark = !mounted || theme === "dark";
+
   return (
     <motion.div
       variants={fadeInUp}
       style={{
-        background: "#0D1320",
+        background: isDark ? "#0D1320" : "#7d8696",
         border: "1px solid rgba(99,102,241,0.25)",
         borderRadius: "20px",
         overflow: "hidden",
@@ -36,10 +56,7 @@ export default function FeaturedProject({ project }) {
 
       {/* Two column layout */}
       <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr",
-        }}
+        style={{ display: "grid", gridTemplateColumns: "1fr" }}
         className="featured-inner"
       >
         {/* Left — Content */}
@@ -56,7 +73,7 @@ export default function FeaturedProject({ project }) {
               background: "rgba(99,102,241,0.08)",
               fontSize: "11px",
               fontWeight: 600,
-              color: "#6366F1",
+              color: isDark ? "#6366F1" : "#242675",
               letterSpacing: "0.06em",
               textTransform: "uppercase",
               marginBottom: "20px",
@@ -84,7 +101,7 @@ export default function FeaturedProject({ project }) {
           <p
             style={{
               fontSize: "13px",
-              color: "#6366F1",
+              color: isDark ? "#6366F1" : "#242675",
               fontWeight: 600,
               letterSpacing: "0.04em",
               textTransform: "uppercase",
@@ -98,7 +115,7 @@ export default function FeaturedProject({ project }) {
           <p
             style={{
               fontSize: "14px",
-              color: "#94A3B8",
+              color: isDark ? "#94A3B8" : "#2d367a",
               lineHeight: 1.75,
               marginBottom: "20px",
               maxWidth: "480px",
@@ -127,7 +144,7 @@ export default function FeaturedProject({ project }) {
                     alignItems: "flex-start",
                     gap: "10px",
                     fontSize: "13px",
-                    color: "#94A3B8",
+                    color: isDark ? "#94A3B8" : "#2d367a",
                     lineHeight: 1.6,
                   }}
                 >
@@ -136,7 +153,7 @@ export default function FeaturedProject({ project }) {
                       width: "5px",
                       height: "5px",
                       borderRadius: "50%",
-                      background: "#6366F1",
+                      background: isDark ? "#6366F1" : "#1b2675",
                       flexShrink: 0,
                       marginTop: "6px",
                     }}
@@ -163,9 +180,11 @@ export default function FeaturedProject({ project }) {
                   fontFamily: "var(--font-jetbrains-mono), monospace",
                   fontSize: "11px",
                   fontWeight: 600,
-                  color: "#6366F1",
+                  color: isDark ? "#6366F1" : "#1b2675",
                   background: "rgba(99,102,241,0.08)",
-                  border: "1px solid rgba(99,102,241,0.2)",
+                  border: isDark
+                    ? "1px solid rgba(99,102,241,0.2)"
+                    : "1px solid #1b2675",
                   padding: "4px 10px",
                   borderRadius: "6px",
                 }}
@@ -214,16 +233,16 @@ export default function FeaturedProject({ project }) {
                 borderRadius: "8px",
                 fontSize: "13px",
                 fontWeight: 600,
-                color: "#94A3B8",
+                color: isDark ? "#94A3B8" : "#7daae8",
                 border: "1px solid rgba(255,255,255,0.12)",
-                background: "rgba(255,255,255,0.04)",
+                background: isDark ? "rgba(255,255,255,0.04)" : "#dee6fc",
                 textDecoration: "none",
                 cursor: "pointer",
                 transition: "all 0.2s ease",
               }}
               whileHover={{
                 scale: 1.04,
-                color: "#F1F5F9",
+                color: isDark ? "#F1F5F9" : "black",
                 borderColor: "rgba(255,255,255,0.25)",
               }}
               whileTap={{ scale: 0.97 }}
@@ -236,9 +255,10 @@ export default function FeaturedProject({ project }) {
 
         {/* Right — Browser mockup preview */}
         <div
-          className="featured-preview"
+          ref={previewRef}
+          className="featured-preview max-sm:px-4!"
           style={{
-            background: "#070B12",
+            background: isDark ? "#070B12" : "#555961",
             borderTop: "1px solid rgba(99,102,241,0.1)",
             display: "flex",
             alignItems: "center",
@@ -250,9 +270,9 @@ export default function FeaturedProject({ project }) {
           <div
             style={{
               width: "100%",
-              maxWidth: "400px",
+              maxWidth: "450px",
               borderRadius: "12px",
-              border: "1px solid rgba(99,102,241,0.2)",
+              border: "2px solid rgba(99,102,241,0.5)",
               overflow: "hidden",
               boxShadow: "0 24px 60px rgba(0,0,0,0.6)",
             }}
@@ -268,30 +288,9 @@ export default function FeaturedProject({ project }) {
                 borderBottom: "1px solid rgba(255,255,255,0.05)",
               }}
             >
-              <div
-                style={{
-                  width: "9px",
-                  height: "9px",
-                  borderRadius: "50%",
-                  background: "#FF5F57",
-                }}
-              />
-              <div
-                style={{
-                  width: "9px",
-                  height: "9px",
-                  borderRadius: "50%",
-                  background: "#FEBC2E",
-                }}
-              />
-              <div
-                style={{
-                  width: "9px",
-                  height: "9px",
-                  borderRadius: "50%",
-                  background: "#28C840",
-                }}
-              />
+              <div style={{ width: "9px", height: "9px", borderRadius: "50%", background: "#FF5F57" }} />
+              <div style={{ width: "9px", height: "9px", borderRadius: "50%", background: "#FEBC2E" }} />
+              <div style={{ width: "9px", height: "9px", borderRadius: "50%", background: "#28C840" }} />
               {/* URL bar */}
               <div
                 style={{
@@ -312,102 +311,103 @@ export default function FeaturedProject({ project }) {
               </div>
             </div>
 
-            {/* Mock screen */}
+            {/* Mock screen — shimmer OR image */}
             <div
               style={{
                 background: "#0D1320",
-                padding: "20px",
-                height: "200px",
-                display: "flex",
-                flexDirection: "column",
-                gap: "10px",
+                height: "220px",
+                position: "relative",
+                overflow: "hidden",
               }}
             >
-              {/* Mock nav bar */}
-              <div
+              {/* Shimmer layer — visible until imageVisible = true */}
+              <motion.div
+                initial={{ opacity: 1 }}
+                animate={{ opacity: imageVisible ? 0 : 1 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
                 style={{
+                  position: "absolute",
+                  inset: 0,
+                  zIndex: 2,
+                  background: "#0D1320",
                   display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  marginBottom: "4px",
+                  flexDirection: "column",
+                  gap: "10px",
+                  padding: "20px",
+                  pointerEvents: "none",
                 }}
               >
+                {/* Animated shimmer bars */}
+                {[
+                  { width: "55%", height: "14px", delay: 0 },
+                  { width: "80%", height: "8px", delay: 0.1 },
+                  { width: "65%", height: "8px", delay: 0.2 },
+                  { width: "40%", height: "8px", delay: 0.3 },
+                ].map((bar, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      width: bar.width,
+                      height: bar.height,
+                      borderRadius: "4px",
+                      overflow: "hidden",
+                      background: "rgba(255,255,255,0.04)",
+                    }}
+                  >
+                    <div className="shimmer-bar" style={{ animationDelay: `${bar.delay}s` }} />
+                  </div>
+                ))}
+
+                {/* Shimmer card grid */}
                 <div
                   style={{
-                    height: "8px",
-                    width: "60px",
-                    borderRadius: "3px",
-                    background: "rgba(99,102,241,0.3)",
+                    display: "grid",
+                    gridTemplateColumns: "1fr 1fr",
+                    gap: "8px",
+                    marginTop: "6px",
                   }}
-                />
-                <div style={{ display: "flex", gap: "6px" }}>
-                  {[1, 2, 3].map((n) => (
+                >
+                  {[0, 0.15, 0.3, 0.45].map((delay, n) => (
                     <div
                       key={n}
                       style={{
-                        height: "6px",
-                        width: "30px",
-                        borderRadius: "2px",
-                        background: "rgba(255,255,255,0.06)",
+                        height: "52px",
+                        borderRadius: "8px",
+                        overflow: "hidden",
+                        background: "#121B2E",
+                        border: "1px solid rgba(99,102,241,0.08)",
                       }}
-                    />
+                    >
+                      <div className="shimmer-bar" style={{ animationDelay: `${delay}s` }} />
+                    </div>
                   ))}
                 </div>
-              </div>
+              </motion.div>
 
-              {/* Mock hero text */}
-              <div
+              {/* Actual image — fades in after shimmer */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: imageVisible ? 1 : 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
                 style={{
-                  height: "12px",
-                  width: "55%",
-                  borderRadius: "3px",
-                  background: "rgba(99,102,241,0.2)",
-                }}
-              />
-              <div
-                style={{
-                  height: "7px",
-                  width: "80%",
-                  borderRadius: "2px",
-                  background: "rgba(255,255,255,0.05)",
-                }}
-              />
-              <div
-                style={{
-                  height: "7px",
-                  width: "65%",
-                  borderRadius: "2px",
-                  background: "rgba(255,255,255,0.04)",
-                }}
-              />
-
-              {/* Mock cards grid */}
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr 1fr",
-                  gap: "8px",
-                  marginTop: "8px",
+                  position: "absolute",
+                  inset: 0,
+                  zIndex: 1,
                 }}
               >
-                {[1, 2, 3, 4].map((n) => (
-                  <div
-                    key={n}
-                    style={{
-                      height: "48px",
-                      borderRadius: "8px",
-                      background: "#121B2E",
-                      border: "1px solid rgba(99,102,241,0.1)",
-                    }}
-                  />
-                ))}
-              </div>
+                <Image
+                  src="/CarFusion.png"
+                  alt={project.title}
+                  fill
+                  style={{ objectFit: "cover" }}
+                />
+              </motion.div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Responsive styles */}
+      {/* Responsive + shimmer styles */}
       <style>{`
         @media (min-width: 900px) {
           .featured-inner {
@@ -418,6 +418,24 @@ export default function FeaturedProject({ project }) {
             border-left: 1px solid rgba(99,102,241,0.1) !important;
             min-height: 380px !important;
           }
+        }
+
+        @keyframes shimmerSlide {
+          0%   { transform: translateX(-100%); }
+          100% { transform: translateX(200%); }
+        }
+
+        .shimmer-bar {
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(
+            90deg,
+            transparent 0%,
+            rgba(99, 102, 241, 0.18) 40%,
+            rgba(34, 211, 238, 0.12) 60%,
+            transparent 100%
+          );
+          animation: shimmerSlide 1.6s ease-in-out infinite;
         }
       `}</style>
     </motion.div>

@@ -5,8 +5,10 @@ import { staggerContainer, fadeInUp } from "@/lib/animations";
 import { coreSkills, skillCategories } from "@/content/skills";
 import SectionWrapper from "@/components/shared/SectionWrapper";
 import SectionHeading from "@/components/shared/SectionHeading";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
-function CoreSkillCard({ skill, index }) {
+function CoreSkillCard({ skill, index, isDark }) {
   const { ref, isInView } = useInView({ threshold: 0.2 });
 
   return (
@@ -14,7 +16,9 @@ function CoreSkillCard({ skill, index }) {
       ref={ref}
       variants={fadeInUp}
       style={{
-        backgroundImage: `linear-gradient(#0D1320, #0D1320), linear-gradient(135deg, rgba(99,102,241,0.4), #22D3EE)`,
+        backgroundImage: isDark
+          ? `linear-gradient(#0D1320, #0D1320), linear-gradient(135deg, rgba(99,102,241,0.4), #22D3EE)`
+          : `linear-gradient(#7da3fa, #143a91), linear-gradient(135deg, rgba(99,102,241,0.01), #9DBFC4)`,
         backgroundOrigin: "border-box",
         backgroundClip: "padding-box, border-box",
         border: "1px solid transparent",
@@ -30,10 +34,14 @@ function CoreSkillCard({ skill, index }) {
           "0 12px 40px rgba(0,0,0,0.3), 0 0 20px rgba(99,102,241,0.15)",
       }}
       onMouseEnter={(e) => {
-        e.currentTarget.style.backgroundImage = `linear-gradient(#0D1320, #0D1320), linear-gradient(135deg, #6366F1, #A78BFA, #22D3EE)`;
+        e.currentTarget.style.backgroundImage = isDark
+          ? `linear-gradient(#0D1320, #0D1320), linear-gradient(135deg, #6366F1, #A78BFA, #22D3EE)`
+          : `linear-gradient(#5788fa, #143a91), linear-gradient(135deg, rgba(99,102,241,0.01), #9DBFC4)`;
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.backgroundImage = `linear-gradient(#0D1320, #0D1320), linear-gradient(135deg, rgba(99,102,241,0.4), #22D3EE)`;
+        e.currentTarget.style.backgroundImage = isDark
+          ? `linear-gradient(#0D1320, #0D1320), linear-gradient(135deg, rgba(99,102,241,0.4), #22D3EE)`
+          : `linear-gradient(#7da3fa, #143a91), linear-gradient(135deg, rgba(99,102,241,0.01), #9DBFC4)`;
       }}
     >
       {/* Icon */}
@@ -108,7 +116,7 @@ function CoreSkillCard({ skill, index }) {
   );
 }
 
-function SkillBadge({ skill, muted }) {
+function SkillBadge({ skill, muted, isDark }) {
   return (
     <span
       style={{
@@ -118,14 +126,14 @@ function SkillBadge({ skill, muted }) {
         padding: "5px 12px",
         borderRadius: "100px",
         border: "1.5px solid transparent",
-        backgroundImage: muted
-          ? `linear-gradient(#0D1320, #0D1320), linear-gradient(135deg, #475569, #818CF8, #475569)`
-          : `linear-gradient(#0D1320, #0D1320), linear-gradient(135deg, ${skill.color}, rgba(99,102,241,0.6), #22D3EE)`,
+        backgroundImage: isDark
+          ? `linear-gradient(#0D1320, #0D1320), linear-gradient(135deg, ${skill.color}, rgba(99,102,241,0.6), #22D3EE)` : 
+          `linear-gradient(#3c75f0, #3c75f0), linear-gradient(135deg, #475569, #818CF8, #475569)`,
         backgroundOrigin: "border-box",
         backgroundClip: "padding-box, border-box",
         fontSize: "12px",
         fontWeight: 500,
-        color: muted ? "#475869" : "#94A3B8",
+        color: isDark ? "#94A3B8" : "white",
         opacity: muted ? 0.9 : 1,
         transition: "all 0.2s ease",
         cursor: "default",
@@ -137,7 +145,7 @@ function SkillBadge({ skill, muted }) {
       }}
       onMouseLeave={(e) => {
         e.currentTarget.style.borderColor = "rgba(99,102,241,0.15)";
-        e.currentTarget.style.color = "#94A3B8";
+        e.currentTarget.style.color = isDark ? "#94A3B8" : "white";
       }}
     >
       <span
@@ -156,6 +164,10 @@ function SkillBadge({ skill, muted }) {
 }
 
 export default function SkillsSection() {
+    const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const isDark = !mounted || theme === "dark";
   return (
     <SectionWrapper id="skills" className="relative">
       {/* Faint background band */}
@@ -190,7 +202,7 @@ export default function SkillsSection() {
         className="skills-core-grid mt-3!"
       >
         {coreSkills.map((skill, i) => (
-          <CoreSkillCard key={skill.name} skill={skill} index={i} />
+          <CoreSkillCard key={skill.name} skill={skill} index={i} isDark={isDark} />
         ))}
       </motion.div>
 
@@ -232,6 +244,7 @@ export default function SkillsSection() {
                   key={skill.name}
                   skill={skill}
                   muted={category.muted}
+                  isDark={isDark}
                 />
               ))}
             </div>
@@ -240,7 +253,7 @@ export default function SkillsSection() {
       </motion.div>
 
       <style>{`
-        @media (min-width: 640px) {
+        @media (min-width: 240px) {
           .skills-core-grid {
             grid-template-columns: repeat(3, 1fr) !important;
           }

@@ -1,11 +1,12 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Send, Github, Linkedin, Twitter, Mail, Loader2 } from "lucide-react";
 import { staggerContainer, fadeInUp } from "@/lib/animations";
 import { siteConfig } from "@/config/site";
 import SectionWrapper from "@/components/shared/SectionWrapper";
 import SectionHeading from "@/components/shared/SectionHeading";
+import { useTheme } from "next-themes";
 
 const socialLinks = [
   { icon: Github, href: siteConfig.links.github, label: "GitHub" },
@@ -31,6 +32,11 @@ export default function ContactSection() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [status, setStatus] = useState("idle"); // idle | loading | success | error
   const [focusedField, setFocusedField] = useState(null);
+
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const isDark = !mounted || theme === "dark";
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -144,7 +150,7 @@ export default function ContactSection() {
                 name="name"
                 value={form.name}
                 onChange={handleChange}
-                placeholder="Anubhav Mishra"
+                placeholder="John Doe"
                 onFocus={() => setFocusedField("name")}
                 onBlur={() => setFocusedField(null)}
                 style={{ ...inputStyle, ...getFocusStyle("name") }}
@@ -169,7 +175,7 @@ export default function ContactSection() {
                 name="email"
                 value={form.email}
                 onChange={handleChange}
-                placeholder="hello@gmail.com"
+                placeholder="john@gmail.com"
                 onFocus={() => setFocusedField("email")}
                 onBlur={() => setFocusedField(null)}
                 style={{ ...inputStyle, ...getFocusStyle("email") }}
@@ -279,6 +285,31 @@ export default function ContactSection() {
           />
         </div>
 
+        <div
+          style={{
+            marginBottom: "20px",
+            textAlign: "center",
+            fontSize: "13px",
+            color: "#64748B",
+            lineHeight: "1.6",
+            display: "flex"
+          }}
+          className="justify-center gap-10 scale-110 max-sm:flex-col max-sm:gap-1"
+        >
+          <div>
+            Email:{" "}
+            <a href="mailto:anubhav@email.com" style={{ color: "#6366F1" }}>
+              2003anubhav@gmail.com
+            </a>
+          </div>
+          <div>
+            Phone:{" "}
+            <a href="tel:+919956904188" style={{ color: "#6366F1" }}>
+              +91 9956904188
+            </a>
+          </div>
+        </div>
+
         {/* Social icons */}
         <div
           style={{
@@ -364,7 +395,7 @@ export default function ContactSection() {
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.color = "#475569";
-                  e.currentTarget.style.background = "#0D1320";
+                  e.currentTarget.style.background = "transparent";
                   e.currentTarget.style.boxShadow = "none";
                 }}
               >

@@ -222,28 +222,28 @@ body {
 /* ══════════════════════════════════════════════
    LIGHT THEME
    Color system:
-   Page bg      → #F5F7FF  (lavender-tinted white)
-   Surface      → #FFFFFF  (pure white cards)
-   Surface alt  → #EEF0FF  (soft indigo tint for alt sections)
-   Border       → rgba(99,102,241,0.15)
-   Text primary → #0F172A  (near black)
+   Page bg        → #EDF0FF  (soft periwinkle blue)
+   Cards          → #FFFFFF  (pure white — floats on bg)
+   Surface alt    → #E4E8FF  (deeper lavender for alt sections)
+   Border         → rgba(99,102,241,0.15)
+   Text primary   → #0F172A  (near black with blue undertone)
    Text secondary → #475569
-   Text dim     → #94A3B8
+   Text dim       → #94A3B8
 ══════════════════════════════════════════════ */
 
 .light {
-  background-color: #F5F7FF;
+  background-color: #cdd3f4 !important;
   color: #0F172A;
 }
 
 /* ─── Body ─── */
 .light body {
-  background-color: #F5F7FF;
+  background-color: #cdd3f4 !important;
   color: #0F172A;
 }
 
 .light main {
-  background-color: #F5F7FF !important;
+  background-color: #e2e5fa !important;
 }
 
 .light section {
@@ -251,13 +251,13 @@ body {
 }
 
 /* ─── Scrollbar ─── */
-.light ::-webkit-scrollbar-track { background: #EEF0FF; }
+.light ::-webkit-scrollbar-track { background: #E4E8FF; }
 .light ::-webkit-scrollbar-thumb { background: #6366F1; border-radius: 3px; }
 .light ::-webkit-scrollbar-thumb:hover { background: #4F46E5; }
 
 /* ─── Selection ─── */
 .light ::selection {
-  background: rgba(99, 102, 241, 0.15);
+  background: rgba(99, 102, 241, 0.18);
   color: #0F172A;
 }
 
@@ -265,7 +265,7 @@ body {
 .light .dot-grid {
   background-image: radial-gradient(
     circle,
-    rgba(99, 102, 241, 0.1) 1px,
+    rgba(85, 88, 253, 0.12) 1px,
     transparent 1px
   );
 }
@@ -275,13 +275,13 @@ body {
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(99, 102, 241, 0.2),
-    rgba(34, 211, 238, 0.2),
+    rgba(99, 102, 241, 0.25),
+    rgba(34, 211, 238, 0.25),
     transparent
   );
 }
 
-/* ─── Gradient text — unchanged ─── */
+/* ─── Gradient text ─── */
 .light .gradient-text {
   background: linear-gradient(90deg, #6366F1, #0EA5E9);
   -webkit-background-clip: text;
@@ -291,8 +291,9 @@ body {
 
 /* ─── Glass (navbar, panels) ─── */
 .light .glass {
-  background: rgba(255, 255, 255, 0.9) !important;
+  background: rgba(255, 255, 255, 0.88) !important;
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(99, 102, 241, 0.15) !important;
   box-shadow: 0 4px 24px rgba(99, 102, 241, 0.08);
 }
@@ -301,24 +302,24 @@ body {
 .light .card {
   background: #FFFFFF !important;
   border: 1px solid rgba(99, 102, 241, 0.12) !important;
-  box-shadow: 0 2px 16px rgba(99, 102, 241, 0.06);
+  box-shadow: 0 2px 16px rgba(99, 102, 241, 0.07);
 }
 
 .light .card:hover {
   border-color: rgba(99, 102, 241, 0.28) !important;
-  box-shadow: 0 8px 32px rgba(99, 102, 241, 0.12), 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+  box-shadow: 0 8px 32px rgba(99, 102, 241, 0.13), 0 2px 8px rgba(0, 0, 0, 0.04) !important;
 }
 
 /* ─── Glow — softer in light ─── */
-.light .glow-indigo { box-shadow: 0 0 30px rgba(99, 102, 241, 0.1); }
+.light .glow-indigo { box-shadow: 0 0 30px rgba(99, 102, 241, 0.12); }
 .light .glow-indigo-sm { box-shadow: 0 0 16px rgba(99, 102, 241, 0.08); }
-.light .glow-text { text-shadow: 0 0 16px rgba(99, 102, 241, 0.25); }
+.light .glow-text { text-shadow: 0 0 16px rgba(99, 102, 241, 0.3); }
 
 /* ─── Navbar ─── */
 .light header > div > div {
   background: rgba(255, 255, 255, 0.92) !important;
   border-color: rgba(99, 102, 241, 0.12) !important;
-  box-shadow: 0 4px 24px rgba(99, 102, 241, 0.08), 0 1px 0 rgba(99, 102, 241, 0.06) !important;
+  box-shadow: 0 4px 24px rgba(99, 102, 241, 0.1), 0 1px 0 rgba(99, 102, 241, 0.06) !important;
 }
 
 .light header button {
@@ -329,19 +330,24 @@ body {
   color: #64748B !important;
 }
 
+.light .nav-right{
+  background: transparent !important;
+}
+
 .light .desktop-nav button:hover {
   color: #0F172A !important;
-  background: rgba(99, 102, 241, 0.06) !important;
+  background: rgba(99, 102, 241, 0.07) !important;
 }
 
 /* ─── Mobile menu ─── */
-.light [style*="rgba(13,19,32,0.95)"] {
+.light [style*="rgba(13,19,32,0.95)"],
+.light [style*="rgba(13,19,32,0.97)"] {
   background: rgba(255, 255, 255, 0.97) !important;
 }
 
 /* ─── Alt section backgrounds ─── */
 .light .bg-background-secondary {
-  background-color: #EEF0FF !important;
+  background-color: #E4E8FF !important;
 }
 
 /* ─── Inline background overrides ─── */
@@ -352,17 +358,17 @@ body {
 
 .light [style*="background: \"#070B12\""],
 .light [style*="background: #070B12"] {
-  background: #F5F7FF !important;
+  background: #EDF0FF !important;
 }
 
 .light [style*="background: \"#121B2E\""],
 .light [style*="background: #121B2E"] {
-  background: #EEF0FF !important;
+  background: #E4E8FF !important;
 }
 
 .light [style*="background: \"#0D1320\""] *,
 .light [style*="background: #0D1320"] * {
-  border-color: rgba(99, 102, 241, 0.12) !important;
+  border-color: rgba(99, 102, 241, 0.1) !important;
 }
 
 /* ─── Text overrides ─── */
@@ -382,28 +388,27 @@ body {
 }
 
 /* ─── Border overrides ─── */
-.light [style*="border: \"1px solid rgba(255,255,255,0.05)\""],
 .light [style*="border: 1px solid rgba(255,255,255,0.05)"],
 .light [style*="border: 1px solid rgba(255,255,255,0.06)"],
 .light [style*="border: 1px solid rgba(255,255,255,0.08)"],
 .light [style*="border-top: 1px solid rgba(255,255,255,0.05)"],
 .light [style*="borderTop: \"1px solid rgba(255,255,255,0.05)\""] {
-  border-color: rgba(99, 102, 241, 0.08) !important;
+  border-color: rgba(99, 102, 241, 0.1) !important;
 }
 
 /* ─── Progress bar tracks ─── */
 .light [style*="background: #1E293B"] {
-  background: #DDE1F5 !important;
+  background: #C7CEFA !important;
 }
 
 /* ─── Tech / code tags ─── */
 .light [style*="background: rgba(99,102,241,0.07)"],
 .light [style*="background: rgba(99,102,241,0.08)"],
 .light [style*="background: rgba(99,102,241,0.1)"] {
-  background: rgba(99, 102, 241, 0.07) !important;
+  background: rgba(99, 102, 241, 0.08) !important;
 }
 
-/* ─── Terminal card syntax colors (adapted for light) ─── */
+/* ─── Terminal card syntax colors ─── */
 .light [style*="color: #C792EA"] { color: #7C3AED !important; }
 .light [style*="color: #82AAFF"] { color: #2563EB !important; }
 .light [style*="color: #C3E88D"] { color: #16A34A !important; }
@@ -415,7 +420,7 @@ body {
 .light input,
 .light textarea {
   background: #FFFFFF !important;
-  border-color: rgba(99, 102, 241, 0.18) !important;
+  border-color: rgba(99, 102, 241, 0.2) !important;
   color: #0F172A !important;
 }
 
@@ -427,37 +432,37 @@ body {
 .light input:focus,
 .light textarea:focus {
   border-color: rgba(99, 102, 241, 0.5) !important;
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.08) !important;
-  background: #FAFBFF !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1) !important;
+  background: #EDF0FF !important;
 }
 
 /* ─── Footer ─── */
 .light footer {
-  background: #EEF0FF !important;
-  border-color: rgba(99, 102, 241, 0.1) !important;
+  background: #E4E8FF !important;
+  border-color: rgba(99, 102, 241, 0.12) !important;
 }
 
 /* ─── Chat widget ─── */
 .light [style*="background: #121B2E"] {
-  background: #EEF0FF !important;
+  background: #E4E8FF !important;
 }
 
 .light [style*="background: rgba(13,19,32"] {
   background: rgba(255, 255, 255, 0.95) !important;
 }
 
-/* ─── Skill card spinning border — visible in light ─── */
+/* ─── Skill card spinning border ─── */
 .light .skill-card-border {
-  opacity: 0.7;
+  opacity: 0.65;
 }
 
-/* ─── Hero orbs — adapt for light ─── */
+/* ─── Hero background orbs — softer in light ─── */
 .light [style*="rgba(99,102,241,0.12)"] {
-  opacity: 0.5;
+  opacity: 0.45;
 }
 
 .light [style*="rgba(34,211,238,0.08)"] {
-  opacity: 0.4;
+  opacity: 0.35;
 }
 
 /* ─── Smooth transitions on mode switch ─── */
@@ -470,10 +475,16 @@ body {
     box-shadow 0.35s ease;
 }
 
-/* ─── Prevent transition on animations ─── */
+/* ─── Prevent transition breaking animations ─── */
 .light .animate-blink,
 .dark .animate-blink,
 .light [class*="animate-"],
 .dark [class*="animate-"] {
   transition: none !important;
+}
+
+/* ─── Framer Motion elements — no transition override ─── */
+.light [style*="transform"],
+.dark [style*="transform"] {
+  transition: background-color 0.35s ease, border-color 0.35s ease, color 0.25s ease;
 }

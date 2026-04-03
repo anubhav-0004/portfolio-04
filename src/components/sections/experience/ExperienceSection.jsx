@@ -5,6 +5,8 @@ import { staggerContainer, fadeInLeft } from "@/lib/animations";
 import { experiences } from "@/content/experience";
 import SectionWrapper from "@/components/shared/SectionWrapper";
 import SectionHeading from "@/components/shared/SectionHeading";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 function TimelineNode({ exp }) {
   return (
@@ -20,6 +22,7 @@ function TimelineNode({ exp }) {
         alignItems: "center",
         justifyContent: "center",
       }}
+      className="max-sm:hidden!"
     >
       {/* Outer slow rotating ring */}
       <motion.div
@@ -137,7 +140,7 @@ function TimelineNode({ exp }) {
   );
 }
 
-function CertificateBadge({ exp }) {
+function CertificateBadge({ exp, isDark }) {
   if (exp.current) {
     return (
       <div
@@ -147,7 +150,7 @@ function CertificateBadge({ exp }) {
           gap: "6px",
           padding: "6px 14px",
           borderRadius: "100px",
-          background: "rgba(16,185,129,0.08)",
+          background: isDark ? "rgba(16,185,129,0.08)" : "transparent",
           border: "1px solid rgba(16,185,129,0.25)",
           fontSize: "12px",
           fontWeight: 600,
@@ -198,13 +201,16 @@ function CertificateBadge({ exp }) {
       href={exp.certificate}
       target="_blank"
       rel="noopener noreferrer"
+      className="max-sm:mx-auto!"
       style={{
         display: "inline-flex",
         alignItems: "center",
         gap: "7px",
         padding: "7px 16px",
         borderRadius: "100px",
-        backgroundImage: `linear-gradient(#0D1320, #0D1320), linear-gradient(135deg, #F59E0B, #FBBF24, #F59E0B)`,
+        backgroundImage: isDark
+          ? `linear-gradient(#0D1320, #0D1320), linear-gradient(135deg, #F59E0B, #FBBF24, #F59E0B)`
+          : `linear-gradient(#8297b3, #6a7c94), linear-gradient(135deg, #F59E0B, #FBBF24, #F59E0B)`,
         backgroundOrigin: "border-box",
         backgroundClip: "padding-box, border-box",
         border: "1.5px solid transparent",
@@ -231,7 +237,9 @@ function CertificateBadge({ exp }) {
           "drop-shadow(0 0 6px rgba(245,158,11,0.8))";
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.backgroundImage = `linear-gradient(#0D1320, #0D1320), linear-gradient(135deg, #F59E0B, #FBBF24, #F59E0B)`;
+        e.currentTarget.style.backgroundImage = isDark
+          ? `linear-gradient(#0D1320, #0D1320), linear-gradient(135deg, #F59E0B, #FBBF24, #F59E0B)`
+          : `linear-gradient(#8297b3, #6a7c94), linear-gradient(135deg, #F59E0B, #FBBF24, #F59E0B)`;
         e.currentTarget.style.boxShadow = "none";
         e.currentTarget.style.letterSpacing = "0.02em";
         e.currentTarget.querySelector(".cert-icon").style.filter = "none";
@@ -250,31 +258,37 @@ function CertificateBadge({ exp }) {
           pointerEvents: "none",
         }}
       />
-      <Award size={13} className="cert-icon" style={{ flexShrink: 0, transition: "filter 0.2s ease" }} />
+      <Award
+        size={13}
+        className="cert-icon"
+        style={{ flexShrink: 0, transition: "filter 0.2s ease" }}
+      />
       View Certificate
       <ExternalLink size={11} style={{ flexShrink: 0, opacity: 0.7 }} />
     </motion.a>
   );
 }
 
-function ExperienceCard({ exp, index }) {
+function ExperienceCard({ exp, index, isDark }) {
   return (
     <motion.div
       variants={fadeInLeft}
       style={{ position: "relative", paddingLeft: "44px" }}
+      className="max-sm:pl-0!"
     >
       <TimelineNode exp={exp} />
 
       {/* Card */}
       <div
         style={{
-          background: "#0D1320",
+          background: isDark ? "#0D1320" : "#7d8696",
           borderRadius: "16px",
           overflow: "hidden",
           border: "1px solid rgba(99,102,241,0.15)",
           transition: "all 0.3s ease",
           position: "relative",
         }}
+        className="max-sm:border-[rgba(99,102,241,0.55)]!"
         onMouseEnter={(e) => {
           e.currentTarget.style.borderColor = "rgba(99,102,241,0.4)";
           e.currentTarget.style.boxShadow =
@@ -296,7 +310,10 @@ function ExperienceCard({ exp, index }) {
         />
 
         {/* Card body */}
-        <div style={{ padding: "24px 28px" }}>
+        <div
+          style={{ padding: "24px 28px" }}
+          className="max-sm:px-4! max-sm:py-3! max-sm:pt-6!"
+        >
           {/* Top row — company info + date */}
           <div
             style={{
@@ -307,6 +324,7 @@ function ExperienceCard({ exp, index }) {
               flexWrap: "wrap",
               gap: "12px",
             }}
+            className="max-sm:mb-2! max-sm:gap-1.5!"
           >
             {/* Left — company + role */}
             <div style={{ flex: 1, minWidth: "200px" }}>
@@ -326,24 +344,27 @@ function ExperienceCard({ exp, index }) {
                     height: "32px",
                     borderRadius: "8px",
                     background: "rgba(99,102,241,0.1)",
-                    border: "1px solid rgba(99,102,241,0.2)",
+                    border: isDark
+                      ? "1px solid rgba(99,102,241,0.2)"
+                      : "1px solid #242675",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     flexShrink: 0,
                   }}
                 >
-                  <Briefcase size={14} color="#6366F1" />
+                  <Briefcase size={14} color={isDark ? "#6366F1" : "#242675"} />
                 </div>
 
                 <p
                   style={{
                     fontSize: "13px",
                     fontWeight: 700,
-                    color: "#6366F1",
+                    color: isDark ? "#6366F1" : "#242675",
                     letterSpacing: "0.04em",
                     textTransform: "uppercase",
                   }}
+                  className="max-sm:text-xs!"
                 >
                   {exp.company}
                 </p>
@@ -361,6 +382,7 @@ function ExperienceCard({ exp, index }) {
                       letterSpacing: "0.06em",
                       textTransform: "uppercase",
                     }}
+                    className="max-sm:p-1.5! max-sm:text-[9px]!"
                   >
                     {exp.type}
                   </span>
@@ -369,7 +391,7 @@ function ExperienceCard({ exp, index }) {
 
               {/* Role */}
               <h3
-                className="font-heading"
+                className="font-heading max-sm:text-lg! max-sm:font-bold!"
                 style={{
                   fontSize: "20px",
                   fontWeight: 800,
@@ -391,6 +413,7 @@ function ExperienceCard({ exp, index }) {
                 gap: "5px",
                 flexShrink: 0,
               }}
+              className="exp-date-block"
             >
               <div
                 style={{
@@ -399,12 +422,15 @@ function ExperienceCard({ exp, index }) {
                   gap: "5px",
                   fontFamily: "var(--font-jetbrains-mono), monospace",
                   fontSize: "11px",
-                  color: "#94A3B8",
+                  color: isDark ? "#94A3B8" : "#242675",
                   background: "rgba(99,102,241,0.06)",
-                  border: "1px solid rgba(99,102,241,0.82)",
+                  border: isDark
+                    ? "1px solid rgba(99,102,241,0.82)"
+                    : "1px solid #242675",
                   padding: "4px 10px",
                   borderRadius: "6px",
                 }}
+                className="max-sm:px-1.5! max-sm:text-[8px]!"
               >
                 <Calendar size={10} />
                 {exp.startDate} — {exp.endDate}
@@ -415,8 +441,9 @@ function ExperienceCard({ exp, index }) {
                   alignItems: "center",
                   gap: "5px",
                   fontSize: "14px",
-                  color: "#87afe8",
+                  color: isDark ? "#87afe8" : "#242675",
                 }}
+                className="max-sm:text-[12px]!"
               >
                 <MapPin size={10} />
                 {exp.location}
@@ -428,8 +455,9 @@ function ExperienceCard({ exp, index }) {
           <div
             style={{
               height: "1px",
-              background:
-                "linear-gradient(90deg, rgba(99,102,241,0.2), transparent)",
+              background: isDark
+                ? "linear-gradient(90deg, rgba(99,102,241,0.2), transparent)"
+                : "#9ca8b8",
               marginBottom: "16px",
             }}
           />
@@ -444,6 +472,7 @@ function ExperienceCard({ exp, index }) {
               flexDirection: "column",
               gap: "10px",
             }}
+            className="max-sm:mb-3!"
           >
             {exp.bullets.map((bullet, i) => (
               <motion.li
@@ -457,13 +486,14 @@ function ExperienceCard({ exp, index }) {
                   gap: "10px",
                   alignItems: "flex-start",
                   fontSize: "14px",
-                  color: "#94A3B8",
+                  color: isDark ? "#94A3B8" : "#242675",
                   lineHeight: 1.7,
                 }}
+                className="max-sm:text-[12px]! max-sm:leading-3.5! max-sm:gap-2! max-sm:text-justify"
               >
                 <span
                   style={{
-                    color: "#6366F1",
+                    color: isDark ? "#6366F1" : "#242675",
                     fontSize: "12px",
                     marginTop: "4px",
                     flexShrink: 0,
@@ -492,19 +522,21 @@ function ExperienceCard({ exp, index }) {
                 style={{
                   fontFamily: "var(--font-jetbrains-mono), monospace",
                   fontSize: "10px",
-                  color: "#82ace8",
-                  background: "#121B3E",
+                  color: isDark ? "#82ace8" : "#1b2675",
+                  background: isDark ? "#121B3E" : "rgba(99,102,241,0.07)",
                   padding: "3px 9px",
                   borderRadius: "4px",
-                  border: "1px solid rgba(255,255,255,0.06)",
+                  border: isDark
+                    ? "1px solid rgba(255,255,255,0.06)"
+                    : "1px solid #1b2675",
                   transition: "all 0.2s ease",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.color = "#94A3B8";
+                  e.currentTarget.style.color = isDark ?  "#94A3B8" : "#052042";
                   e.currentTarget.style.borderColor = "rgba(99,102,241,0.25)";
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.color = "#475569";
+                  e.currentTarget.style.color = isDark ? "#475569" : "#1b2675";
                   e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)";
                 }}
               >
@@ -524,8 +556,9 @@ function ExperienceCard({ exp, index }) {
               flexWrap: "wrap",
               gap: "10px",
             }}
+            className="max-sm:pt-2.5! max-sm:border-[rgba(255,255,255,0.25)]!"
           >
-            <CertificateBadge exp={exp} />
+            <CertificateBadge exp={exp} isDark={isDark} />
           </div>
         </div>
       </div>
@@ -534,8 +567,15 @@ function ExperienceCard({ exp, index }) {
 }
 
 export default function ExperienceSection() {
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const isDark = !mounted || theme === "dark";
   return (
-    <SectionWrapper id="experience" className="bg-background-secondary">
+    <SectionWrapper
+      id="experience"
+      className="bg-background-secondary max-sm:py-20!"
+    >
       <SectionHeading
         eyebrow="Career Path"
         title="Where I've"
@@ -546,7 +586,7 @@ export default function ExperienceSection() {
         variants={staggerContainer}
         initial="hidden"
         whileInView="visible"
-        className="mt-4!"
+        className="mt-4! max-sm:pl-0!"
         viewport={{ once: true, margin: "-60px" }}
         style={{
           position: "relative",
@@ -604,7 +644,7 @@ export default function ExperienceSection() {
         />
 
         {experiences.map((exp, i) => (
-          <ExperienceCard key={exp.id} exp={exp} index={i} />
+          <ExperienceCard key={exp.id} exp={exp} index={i} isDark={isDark} />
         ))}
       </motion.div>
 
@@ -613,6 +653,14 @@ export default function ExperienceSection() {
           0%   { background-position: -200% 0; }
           100% { background-position: 200% 0; }
         }
+        @media (max-width: 640px) {
+        .exp-date-block {
+          flex-direction: row !important;
+          justify-content: space-between !important;
+          align-items: center !important;
+          width: 95% !important;
+        }
+  }
       `}</style>
     </SectionWrapper>
   );

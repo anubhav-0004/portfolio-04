@@ -1,8 +1,14 @@
 "use client";
 import { motion } from "framer-motion";
 import { siteConfig } from "@/config/site";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 export default function Footer() {
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const isDark = !mounted || theme === "dark";
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -38,15 +44,13 @@ export default function Footer() {
         }}
       >
         {/* Left */}
-        <p style={{ fontSize: "13px", color: "#475569" }}>
+        <p style={{ fontSize: "13px", color: isDark ? "#475569" : "#1b2675" }}>
           Designed & Built by{" "}
-          <span style={{ color: "#94A3B8", fontWeight: 500 }}>
+          <span style={{ color: isDark ? "#94A3B8" : "#050c3d", fontWeight: 500 }}>
             {siteConfig.name}
           </span>{" "}
           ·{" "}
-          <span style={{ color: "#6366F1" }}>
-            © {new Date().getFullYear()}
-          </span>
+          <span style={{ color: "#6366F1" }}>© {new Date().getFullYear()}</span>
         </p>
 
         {/* Center */}

@@ -15,7 +15,7 @@ export default function SectionWrapper({ children, id, className = "" }) {
       animate={isInView ? "visible" : "hidden"}
       className={`section-padding ${className}`}
     >
-      <div className="page-container">
+      <div className="page-container max-sm:px-4!">
         {children}
       </div>
     </motion.section>

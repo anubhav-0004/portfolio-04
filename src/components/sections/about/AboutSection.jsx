@@ -5,8 +5,14 @@ import { personal } from "@/content/personal";
 import SectionWrapper from "@/components/shared/SectionWrapper";
 import SectionHeading from "@/components/shared/SectionHeading";
 import Image from "next/image";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 export default function AboutSection() {
+    const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const isDark = !mounted || theme === "dark"; 
   return (
     <SectionWrapper id="about">
       <div
@@ -16,7 +22,7 @@ export default function AboutSection() {
           gap: "48px",
           alignItems: "start",
         }}
-        className="about-grid"
+        className="about-grid max-sm:max-w-[98%]! max-sm:mx-auto!"
       >
         {/* Left — Image + Stats */}
         <motion.div
@@ -25,6 +31,7 @@ export default function AboutSection() {
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
           style={{ position: "relative" }}
+          className="max-sm:max-w-[95%]!"
         >
           {/* Deco offset border */}
           <div
@@ -38,6 +45,7 @@ export default function AboutSection() {
               borderRadius: "20px",
               zIndex: 0,
             }}
+            className="max-sm:scale-105 max-sm:-left-1! max-sm:border-[rgba(90,92,208,0.67)]!"
           />
 
           {/* Photo frame */}
@@ -48,14 +56,15 @@ export default function AboutSection() {
               borderRadius: "20px",
               overflow: "hidden",
               border: "2px solid transparent",
-              background:
-                "linear-gradient(#0D1320, #0D1320) padding-box, linear-gradient(135deg, #6366F1, #22D3EE) border-box",
+              background: isDark ?
+                "linear-gradient(#0D1320, #0D1320) padding-box, linear-gradient(135deg, #6366F1, #22D3EE) border-box" : "#45484f",
               aspectRatio: "1",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               marginTop: "16px",
             }}
+            className="max-sm:ml-2!"
           >
             {/* Gradient fill behind avatar */}
             <div
@@ -81,7 +90,7 @@ export default function AboutSection() {
                 <motion.div
                   animate={{ rotate: 360 }}
                   transition={{
-                    duration: 7,
+                    duration: 1,
                     repeat: Infinity,
                     ease: "linear",
                   }}
@@ -204,18 +213,20 @@ export default function AboutSection() {
               position: "relative",
               zIndex: 1,
             }}
+            className="max-sm:mt-4! max-sm:px-2! max-sm:"
           >
             {personal.stats.map((stat) => (
               <div
                 key={stat.label}
                 style={{
-                  background: "#0D1320",
-                  border: "1px solid rgba(99,102,241,0.15)",
+                  background: isDark ? "#0D1325" : "#45484f",
+                  border: "1px solid rgba(99,102,241,0.35)",
                   borderRadius: "12px",
                   padding: "14px 10px",
                   textAlign: "center",
                   transition: "all 0.2s ease",
                 }}
+                className="max-sm:px-1!"
                 onMouseEnter={(e) => {
                   e.currentTarget.style.borderColor = "rgba(99,102,241,0.35)";
                 }}
@@ -237,7 +248,7 @@ export default function AboutSection() {
                 <span
                   style={{
                     fontSize: "10px",
-                    color: "#475569",
+                    color: isDark ? "#475569" : "#97b5f0",
                     textTransform: "uppercase",
                     letterSpacing: "0.06em",
                   }}
@@ -277,7 +288,7 @@ export default function AboutSection() {
                 variants={fadeInRight}
                 style={{
                   fontSize: "15px",
-                  color: "#94A3B8",
+                  color: isDark ? "#94A3B8" : "#1b2675",
                   lineHeight: 1.8,
                 }}
               >
@@ -300,7 +311,7 @@ export default function AboutSection() {
                 key={value.text}
                 variants={fadeInRight}
                 style={{
-                  background: "#0D1320",
+                  background: isDark ? "#0D1320" : "#45484f",
                   border: "1px solid rgba(99,102,241,0.12)",
                   borderRadius: "10px",
                   padding: "14px 16px",

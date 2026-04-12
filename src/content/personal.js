@@ -4,7 +4,7 @@ export const personal = {
   roles: [
     "Frontend Engineer",
     "React Developer",
-    "Full-Stack Developer",
+    "MERN-Stack Developer",
     "Next.js Developer",
     "Software Developer",
   ],
@@ -19,7 +19,7 @@ export const personal = {
   stats: [
     { value: "8+", label: "Projects" },
     { value: "3", label: "Internships" },
-    { value: "500+", label: "DSA Problems" },
+    { value: "450+", label: "DSA Problems" },
   ],
   values: [
     { icon: "⚡", text: "Performance-focused full-stack development" },

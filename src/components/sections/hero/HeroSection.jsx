@@ -24,7 +24,7 @@ const socialLinks = [
 ];
 
 export default function HeroSection() {
-  const currentRole = useTypewriter(personal.roles, 80, 50, 2200);
+  const currentRole = useTypewriter(personal.roles, 80, 50, 2000);
   
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);

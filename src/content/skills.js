@@ -27,6 +27,7 @@ export const skillCategories = [
       { name: "Framer Motion", color: "#BB4B96" },
       { name: "Redux Toolkit", color: "#764ABC" },
       { name: "React Query", color: "#FF4154" },
+      { name: "Node.js", color: "#bdf26d" },
       { name: "Express.js", color: "#68A063" },
     ],
   },
@@ -44,10 +45,10 @@ export const skillCategories = [
   {
     label: "Currently Exploring",
     skills: [
-      { name: "Rust", color: "#CE412B" },
+      // { name: "Rust", color: "#CE412B" },
       { name: "Three.js", color: "#049EF4" },
-      { name: "WebAssembly", color: "#654FF0" },
-      { name: "Bun", color: "#FBF0DF" },
+      // { name: "WebAssembly", color: "#654FF0" },
+      // { name: "Bun", color: "#FBF0DF" },
     ],
     muted: true,
   },

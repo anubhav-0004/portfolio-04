@@ -235,7 +235,8 @@ export default function HeroSection() {
               </motion.button>
 
               <motion.a
-                href="/resume.pdf"
+                href="https://drive.google.com/file/d/1Qrxn3zhPhz8WcGYuRipcpywQlan8Uhcj/view?usp=drivesdk"
+                target="_blank"
                 download
                 style={{
                   display: "flex",
